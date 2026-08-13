@@ -108,27 +108,49 @@ Maintaining accurate `.veda` files is essential. You can verify and test your `.
 
 ### Automated Linting & CI Integration 🤖
 
-To automate VEDA compliance verification, this repository includes a production-grade, zero-dependency Python CLI validator: **[tests/veda_check.py](tests/veda_check.py)**.
+To automate VEDA compliance verification, this repository includes a production-grade, zero-dependency Python CLI validator. It is fully packaged and **instantly installable** on any developer machine or CI/CD container directly from GitHub!
 
-The validator recursively traverses your workspace and enforces:
-- **Bi-directional Verification:** Ensures every physical file is documented in `.veda`, and every documented item physically exists (no dead links).
-- **Directory Coverage:** Flags any directory containing files that is missing its `.veda` index.
-- **Custom Exclude Rules:** Ignores standard build directories and dot-files (`.git`, `.venv`, `node_modules`, etc.) by default, with support for custom command-line overrides.
+#### 📦 Installation (Global CLI)
 
-#### Running the Validator
-
-Run the script directly from your terminal to validate the entire repository:
-
+Install the validator tool with a single command:
 ```bash
-# Run recursive check starting from the repository root
-python3 tests/veda_check.py -r
-
-# Or make the script executable and run it
-chmod +x tests/veda_check.py
-./tests/veda_check.py -r
+pip install git+https://github.com/drchinca/veda.git
 ```
 
+This registers the global `veda-check` command on your system.
+
+#### 🚀 Running the Validator
+
+Run the recursive check starting from any workspace root directory:
+```bash
+# Verify the current folder and all subdirectories recursively
+veda-check -r
+```
+
+*(Alternatively, you can run the raw script inside this repository directly: `python3 tests/veda_check.py -r`)*
+
 On success, the script prints compliance logs for all verified directories and exits with code `0`. On violation, it logs detailed errors showing dead links or undocumented items and exits with code `1`, making it perfectly suited for **GitHub Actions CI pipelines** or **git pre-commit hooks**.
+
+---
+
+## 🤖 Instructing AI / LLM Agents (Strong DX Blueprint) 👑
+
+Having `.veda` files in your repository is only half the battle; the other half is ensuring that your AI coding assistants (Cursor, Copilot, Gemini CLI, Claude, GPT-4) actually **know** to look at them first to save you tokens and eliminate roundtrips.
+
+To do this, copy and paste the following blueprint directly into your repository's private instruction files (e.g., `.cursorrules`, `GEMINI.md`, `.github/copilot-instructions.md`, or your agent's system prompt config):
+
+### 📄 Copy-Paste AI Instruction Blueprint
+
+```markdown
+# 👑 Directory Navigation Discipline (.veda rule)
+Before scanning folders, listing files, or recursively searching this codebase:
+1. ALWAYS check if a `.veda` file exists in the target directory.
+2. Read the `.veda` file first to understand the directory's semantic map and the role of its files.
+3. NEVER read source files sequentially or list entire directories to understand file relationships if a `.veda` index is available. Use the `.veda` file to target your file reads and edits surgically.
+4. By using `.veda`, you save context token limit usage and avoid hallucinatory code edits.
+```
+
+By adding this tiny block to your project's instructions, AI agents will immediately adapt, leading to **ultra-fast, highly accurate, and extremely token-cheap interactions**.
 
 ---
 

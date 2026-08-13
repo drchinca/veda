@@ -1,4 +1,5 @@
 # tests/ — testing and automated verification suites
 
+- `__init__.py` — python package initialization
 - `veda_check.py` — recursive, bidirectional CLI compliance validator
 - `.veda` — this self-documenting index mapping the directory's files
