@@ -3,5 +3,6 @@
 - `README.md` — the complete specification, benefits, real-world examples, and community guidelines
 - `LICENSE` — official MIT open-source license
 - `examples/` — physical sandbox demonstrating multi-layered frontend and backend .veda indices
+- `tests/` — automated verification tools and continuous integration scripts
 - `.veda` — this self-documenting index mapping the repository's files
 - `.gitignore` — standard ignore rules to keep OS/IDE junk out of the repository

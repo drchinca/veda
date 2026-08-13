@@ -106,40 +106,29 @@ Maintaining accurate `.veda` files is essential. You can verify and test your `.
 - **Delete Rule:** If you delete a file, immediately delete its line in `.veda`.
 - **Refactor Rule:** If a file's responsibility changes, rewrite its description to match its new intent.
 
-### Automated Linting / CI Checks
-Below is an example of a simple Python verification script (`veda-check.py`) that can be used as a pre-commit hook or CI step to ensure every tracked file in a folder has a matching `.veda` entry:
+### Automated Linting & CI Integration 🤖
 
-```python
-import os
-import re
+To automate VEDA compliance verification, this repository includes a production-grade, zero-dependency Python CLI validator: **[tests/veda_check.py](tests/veda_check.py)**.
 
-def verify_veda(directory):
-    veda_path = os.path.join(directory, ".veda")
-    if not os.path.exists(veda_path):
-        print(f"⚠️ Warning: Missing .veda file in {directory}")
-        return False
-        
-    with open(veda_path, "r") as f:
-        content = f.read()
-        
-    # Extract backtick-enclosed filenames from .veda bullet list
-    mapped_files = set(re.findall(r"- `([^`]+)`", content))
-    
-    # Get physical files in the directory (excluding .veda, .DS_Store, git folders)
-    physical_files = {
-        f for f in os.listdir(directory)
-        if f not in {".veda", ".DS_Store", ".git"} and os.path.isfile(os.path.join(directory, f))
-    }
-    
-    # Check for missing files in .veda
-    missing_docs = physical_files - mapped_files
-    if missing_docs:
-        print(f"❌ Error in {directory}: Physical files missing from .veda: {missing_docs}")
-        return False
-        
-    print(f"✅ Directory {directory} is fully VEDA-compliant!")
-    return True
+The validator recursively traverses your workspace and enforces:
+- **Bi-directional Verification:** Ensures every physical file is documented in `.veda`, and every documented item physically exists (no dead links).
+- **Directory Coverage:** Flags any directory containing files that is missing its `.veda` index.
+- **Custom Exclude Rules:** Ignores standard build directories and dot-files (`.git`, `.venv`, `node_modules`, etc.) by default, with support for custom command-line overrides.
+
+#### Running the Validator
+
+Run the script directly from your terminal to validate the entire repository:
+
+```bash
+# Run recursive check starting from the repository root
+python3 tests/veda_check.py -r
+
+# Or make the script executable and run it
+chmod +x tests/veda_check.py
+./tests/veda_check.py -r
 ```
+
+On success, the script prints compliance logs for all verified directories and exits with code `0`. On violation, it logs detailed errors showing dead links or undocumented items and exits with code `1`, making it perfectly suited for **GitHub Actions CI pipelines** or **git pre-commit hooks**.
 
 ---
 
