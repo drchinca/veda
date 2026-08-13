@@ -25,6 +25,37 @@ By prioritizing **intent over implementation**, `.veda` allows developers and LL
 
 ---
 
+## 👑 Why VEDA? — The Core Value Proposition
+
+In the age of AI-assisted engineering (using tools like Cursor, Copilot, or Gemini CLI), **context is currency**. Unstructured, repetitive file-traversal is the single largest waste of token limits, cost, and developer time. 
+
+Here is why adopting `.veda` is the highest-leverage operational decision you can make for your repository:
+
+### 1. Eliminating AI Agent "Lost in the Woods" Syndrome 🌲
+When an LLM agent receives a broad directive (e.g., *"Fix the session logout bug"*), its first move is to scan directories. Without `.veda`, the agent must run multiple speculative searches (`glob`, `grep`), read large files sequentially, and hope it finds the right file.
+- **With `.veda`:** The agent reads the local `.veda` file in **1 turn**, instantly learns the purpose of each file, and surgically targets the exact file it needs. No guesswork, no wasted cycles.
+
+### 2. Radical Reduction of LLM Hallucinations 🧠
+When an agent reads large, unrelated source files just to figure out what they do, it fills its context window with boilerplate code. This "noise" reduces the agent's attention span, leading to low-quality edits or hallucinations. By giving the agent a clean, 200-token semantic map, the agent maintains maximum reasoning accuracy.
+
+### 3. Massive Financial Savings on API Costs 💸
+Reading 10 source files to understand a module's layout can easily consume 10,000 to 30,000 tokens per turn. At scale across a dev team, this translates to hundreds of dollars in API bills. Reading a single `.veda` file costs **less than 200 tokens (a fraction of a cent)**.
+
+---
+
+## 📊 Token & Turn-Count Benchmark
+
+To quantify these efficiency gains, we benchmarked a standard AI agent tasked with finding and modifying a bug inside an unfamiliar nested module containing 15 files (averaging 150 lines of code per file).
+
+| Metric | Traditional Exploration (Raw Code Reading) | `.veda`-Assisted Exploration | Difference / Efficiency Gain |
+| :--- | :--- | :--- | :--- |
+| **Initial Context Load** | ~7,500 - 15,000 tokens (opening multiple files) | **~150 tokens** (reading single `.veda` index) | **98% - 99% token reduction** |
+| **API Turn Count** | 4 to 8 recursive file reads/turns | **1 to 2 targeted turns** | **75% fewer roundtrips** |
+| **Cost per Operation** | ~$0.05 - $0.15 (depending on LLM provider) | **<$0.001** | **Fraction of a cent** |
+| **Agent Reasoning Accuracy** | Low to Moderate (drowned in boilerplate) | **Very High** (hyper-focused context) | **Eliminates hallucinatory edits** |
+
+---
+
 ## 📝 The Specification
 
 Every `.veda` file is written in clean, standard Markdown. 
@@ -49,42 +80,20 @@ A standard Markdown bulleted list mapping files and sub-folders to their purpose
 
 ---
 
-## 🔍 Examples from the Wild
+## 🔍 Examples in This Repo
 
-### Standard Backend Module (`src/billing_service/`)
-```markdown
-# billing_service/ — Stripe-integrated invoicing backend
+This repository contains ready-to-inspect physical examples of the `.veda` convention in action. You can explore them directly:
 
-- `api/` — RESTful endpoint routers and input schema validation
-- `db/` — database connection pool configuration and migrations
-- `models/` — serialization schemas and immutable core domain models
-- `processors/` — Stripe webhook handlers and payment processing engine
-- `main.py` — application entrypoint & logging configuration
-```
+### 1. Frontend Client Layout (`examples/web_app/`)
+A typical React (TypeScript) client application with nested routing, components, and custom state hooks:
+- **[examples/web_app/.veda](examples/web_app/.veda)** — maps the frontend package structure.
+- **[examples/web_app/src/.veda](examples/web_app/src/.veda)** — maps components, hooks, and mount files.
+- **[examples/web_app/src/components/.veda](examples/web_app/src/components/.veda)** — maps UI elements.
 
-### Standard Infrastructure Directory (`infra/`)
-```markdown
-# infra/ — multi-environment deployment stack, one line per item
-
-- `environments/` — per-environment stacks: `dev/` (blueprint), `demo/` (pilot), `prod/` (production)
-- `modules/` — reusable infrastructure components (e.g. front-door, load balancer)
-- `env/` — target build configurations (local_dev, cloud_proxy, etc.)
-- `environments.md` — port maps and environment state configurations
-- `Makefile` — pipeline tasks and code quality validation recipes
-```
-
----
-
-## 📊 Token & Turn-Count Benchmark
-
-To quantify the efficiency gain, we benchmarked a standard AI agent tasked with finding and modifying a bug inside an unfamiliar nested module containing 15 files (average 150 lines of code per file).
-
-| Metric | Traditional Exploration (Raw Code Reading) | `.veda`-Assisted Exploration | Difference / Efficiency Gain |
-| :--- | :--- | :--- | :--- |
-| **Initial Context Load** | ~7,500 - 15,000 tokens (opening multiple files) | **~150 tokens** (reading single `.veda` index) | **98% - 99% token reduction** |
-| **API Turn Count** | 4 to 8 recursive file reads/turns | **1 to 2 targeted turns** | **75% fewer roundtrips** |
-| **Cost per Operation** | ~$0.05 - $0.15 (depending on LLM provider) | **<$0.001** | **Fraction of a cent** |
-| **Agent Reasoning Accuracy** | Low to Moderate (drowned in boilerplate) | **Very High** (hyper-focused context) | **Eliminates hallucinatory edits** |
+### 2. Backend Service Layout (`examples/server/`)
+A lightweight Python microservice written in FastAPI, illustrating clean DTO, model, and routing separation:
+- **[examples/server/.veda](examples/server/.veda)** — maps the backend app folder and dependencies.
+- **[examples/server/app/.veda](examples/server/app/.veda)** — maps `main.py`, `models.py`, and `routes.py`.
 
 ---
 
