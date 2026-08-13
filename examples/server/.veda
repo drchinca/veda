@@ -1,0 +1,4 @@
+# server/ — lightweight microservice example in Python (FastAPI)
+
+- `app/` — core logic, routing schemas, and mock database models
+- `requirements.txt` — Python dependencies mapping FastAPI and Uvicorn

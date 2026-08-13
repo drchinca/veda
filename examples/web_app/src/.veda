@@ -1,0 +1,5 @@
+# src/ — core application source tree
+
+- `components/` — reusable presentation-layer components
+- `hooks/` — custom React state and side-effect hooks
+- `main.tsx` — application mount point and global style wireframe

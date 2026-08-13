@@ -1,0 +1,4 @@
+# components/ — UI presentation widgets
+
+- `App.tsx` — root layout page and global layout structure
+- `Button.tsx` — custom design-token-compliant primary action button

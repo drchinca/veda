@@ -1,0 +1,5 @@
+# app/ — FastAPI application directory
+
+- `main.py` — application startup, routing configuration, and logging setup
+- `models.py` — Pydantic DTO models representing requests and responses
+- `routes.py` — REST routing controllers mapping requests to service handlers

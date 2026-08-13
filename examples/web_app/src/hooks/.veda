@@ -1,0 +1,3 @@
+# hooks/ — custom React hooks encapsulating state logic
+
+- `useAuth.ts` — session tracking and secure localStorage cookie management

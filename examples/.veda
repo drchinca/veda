@@ -1,0 +1,4 @@
+# examples/ — sandboxed workspaces demonstrating the .veda convention
+
+- `web_app/` — a frontend React application showing component and state file mapping
+- `server/` — a lightweight Python FastAPI microservice demonstrating model and routing mapping

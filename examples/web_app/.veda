@@ -1,0 +1,5 @@
+# web_app/ — a sample React (TypeScript) frontend application
+
+- `src/` — application source code directory (components, hooks, routing)
+- `package.json` — project dependencies and build script definitions
+- `tsconfig.json` — TypeScript compiler configurations
